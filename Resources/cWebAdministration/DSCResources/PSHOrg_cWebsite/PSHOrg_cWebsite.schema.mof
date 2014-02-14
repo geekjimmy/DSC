@@ -1,12 +1,23 @@
-[ClassVersion("1.0.0"), FriendlyName("cWebsite")] 
-class PSHOrg_cWebsite : OMI_BaseResource
+[ClassVersion("1.0.0")] 
+Class MSFT_xWebBindingInformation
+{
+    [write]UInt16 Port;
+    [Write,ValueMap{"http", "https"},Values{"http", "https"}] string Protocol;
+    [write]String IPAddress;
+    [write]String HostName;
+    [write]String CertificateThumbprint;
+    [write,ValueMap{"Personal", "WebHosting"},Values{"Personal", "WebHosting"}] string CertificateStoreName;
+};
+
+
+[ClassVersion("2.0.0"), FriendlyName("xWebsite")] 
+class MSFT_xWebsite : OMI_BaseResource
 {
   [Key] string Name;
-  [Key] string PhysicalPath;
+  [required] string PhysicalPath;
   [write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
   [write,ValueMap{"Started","Stopped"},Values{"Started", "Stopped"}] string State;
-  [write] string Protocol[];
-  [write] string BindingInfo[];
+  [write, EmbeddedInstance("MSFT_xWebBindingInformation"), Description("Hashtable containing binding information (Port, Protocol, IPAddress, HostName, CertificateThumbPrint, CertificateStore)")] string BindingInfo[];
   [write] string ApplicationPool;
-  [read] string ID;
-};
+  [read] string Id;
+}; 
