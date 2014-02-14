@@ -25,7 +25,11 @@ function Get-TargetResource
     (   
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Name
+        [string]$Name,
+				
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PhysicalPath
     )
 
         $getTargetResourceResult = $null;
